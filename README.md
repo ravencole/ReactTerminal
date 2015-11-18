@@ -1,0 +1,1 @@
+Small library that adds Terminal looking UI component to React Apps
