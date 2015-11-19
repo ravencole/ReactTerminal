@@ -38,6 +38,7 @@
     "postcss-cssnext": "^2.1.0",
     "postcss-import": "^7.0.0",
     "postcss-nested": "^1.0.0",
+    "radium": "^0.15.3",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
     "sinon": "^1.16.1"

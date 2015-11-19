@@ -66,7 +66,7 @@ browserSync({
 });
 
 // Watch for modifications
-gaze('docs/**', (err, watcher) => {
+gaze(['src/**/**.js', '**/**.css'], (err, watcher) => {
   if (err) {
     console.log(err);
   }

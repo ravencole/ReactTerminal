@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Test from '~/src/test';
+import Terminal from '~/src/terminal';
 
-ReactDOM.render(<Test/>, document.getElementById('dogs'));
-
-
+ReactDOM.render(<Terminal/>, document.getElementById('dogs'));
