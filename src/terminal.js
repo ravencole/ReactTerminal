@@ -3,7 +3,7 @@ import Radium from 'radium';
 import TerminalMenuButtons from './components/terminalMenuButtons';
 import TerminalInput from './components/terminalInput';
 
-var Terminal = React.createClass({
+let Terminal = React.createClass({
     getInitialState() {
         return {
             firstClickTerminalResizeX: false,
@@ -12,9 +12,12 @@ var Terminal = React.createClass({
             origionalTermnalWidth: false,
             terminalHasMoved: false,
             terminalHidden: false,
+            terminalInputColor: '#00ff00',
+            terminalInputText: '',
             terminalMoving: false,
             terminalPositionTop: '50%',
             terminalPositionLeft: '50%',
+            terminalPreviousCommands: [],
             terminalSizeHeight: 400,
             terminalSizeWidth: 650
         }
@@ -41,11 +44,22 @@ var Terminal = React.createClass({
             });
         }.bind(this);
     },
+    onTerminalInputTextChange(e) {
+        this.setState({
+            terminalInputText: e.target.value
+        });
+    },
+    onTerminalSubmit(e) {
+        e.preventDefault();
+        this.setState({
+            terminalPreviousCommands: this.state.terminalPreviousCommands.concat({content: this.state.terminalInputText}),
+            terminalInputText: ''
+        });
+    },
     resizeTerminal() {
-        console.log('fuckme');
         document.onmousemove = function(e) {
-            var newHeight = this.state.origionalTermnalHeight - (this.state.firstClickTerminalResizeY - e.pageY);
-            var newWidth  = this.state.origionalTermnalWidth - (this.state.firstClickTerminalResizeX - e.pageX);
+            let newHeight = this.state.origionalTermnalHeight - (this.state.firstClickTerminalResizeY - e.pageY);
+            let newWidth  = this.state.origionalTermnalWidth - (this.state.firstClickTerminalResizeX - e.pageX);
 
             if (!this.state.firstClickTerminalResizeX) {
                 this.setState({ 
@@ -143,29 +157,46 @@ var Terminal = React.createClass({
         }
         return (
             <div style={ styles.Container }>
+
+                <TerminalInput 
+                    onTerminalSubmit          = {this.onTerminalSubmit}
+                    onTerminalInputTextChange = {this.onTerminalInputTextChange}
+                    terminalInputColor        = {this.state.terminalInputColor}
+                    terminalInputText         = {this.state.terminalInputText}
+                    terminalPreviousCommands  = {this.state.terminalPreviousCommands}
+                />
+
                 <div style={ styles.MenuBar }>
+
                     <div 
-                        key="terminalDragIcon" 
-                        style={ styles.dragIconContainer } 
-                        onMouseUp={this.dropTerminal} 
-                        onMouseDown={this.moveTerminal}
+                        key            = "terminalDragIcon" 
+                        style          = { styles.dragIconContainer } 
+                        onMouseUp      = {this.dropTerminal} 
+                        onMouseDown    = {this.moveTerminal}
                     >
+
                         <div style={styles.dragBar}></div>
+
                     </div>
+
                     <TerminalMenuButtons 
-                        hideTerminal={this.hideTerminal}
-                        expandTerminal={this.expandTerminal}
+                        hideTerminal   = {this.hideTerminal}
+                        expandTerminal = {this.expandTerminal}
                     />
+
                 </div>
+
                 <div 
-                    key="ResizeIcon" 
-                    style={[ styles.ResizeIconContainer ]}
-                    onMouseDown={this.resizeTerminal}
-                    onMouseUp={this.stopResizeTerminal}
+                    key         = "ResizeIcon" 
+                    style       = {[ styles.ResizeIconContainer ]}
+                    onMouseDown = {this.resizeTerminal}
+                    onMouseUp   = {this.stopResizeTerminal}
                 >
+
                     <div style={ styles.ResizeIcon }></div>
+                
                 </div>
-                <TerminalInput />
+
             </div>
         );
     }
