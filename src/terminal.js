@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Radium from 'radium';
 import TerminalMenuButtons from './components/terminalMenuButtons';
 import TerminalInput from './components/terminalInput';
+import CommandController from '~/src/models/CommandController';
 
 let Terminal = React.createClass({
     getInitialState() {
@@ -51,15 +52,13 @@ let Terminal = React.createClass({
     },
     onTerminalSubmit(e) {
         e.preventDefault();
-        this.setState({
-            terminalPreviousCommands: this.state.terminalPreviousCommands.concat({content: this.state.terminalInputText}),
-            terminalInputText: ''
-        });
+        let command = new CommandController(this.state.terminalInputText, this.state.terminalPreviousCommands);
+        this.setState(command);
     },
     resizeTerminal() {
         document.onmousemove = function(e) {
-            let newHeight = this.state.origionalTermnalHeight - (this.state.firstClickTerminalResizeY - e.pageY);
-            let newWidth  = this.state.origionalTermnalWidth - (this.state.firstClickTerminalResizeX - e.pageX);
+            let newHeight = this.state.origionalTermnalHeight - (this.state.firstClickTerminalResizeY - e.pageY),
+                newWidth  = this.state.origionalTermnalWidth - (this.state.firstClickTerminalResizeX - e.pageX);
 
             if (!this.state.firstClickTerminalResizeX) {
                 this.setState({ 

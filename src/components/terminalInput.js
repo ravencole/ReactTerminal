@@ -35,7 +35,7 @@ let TerminalInput = React.createClass({
         };
         let displayTerminalPreviousCommands = this.props.terminalPreviousCommands.map(function(command) {
             return (
-                <div>{command.content}</div>
+                <div>{command.command}</div>
             );
         });
         return (
