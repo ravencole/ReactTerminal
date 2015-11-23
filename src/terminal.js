@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Radium from 'radium';
 import TerminalMenuButtons from './components/terminalMenuButtons';
 import TerminalInput from './components/terminalInput';
-import CommandController from '~/src/models/CommandController';
+import CommandController from '~/src/controllers/CommandController';
 
 let Terminal = React.createClass({
     getInitialState() {
@@ -20,7 +20,8 @@ let Terminal = React.createClass({
             terminalPositionLeft: '50%',
             terminalPreviousCommands: [],
             terminalSizeHeight: 400,
-            terminalSizeWidth: 650
+            terminalSizeWidth: 650,
+            terminalUserName: 'dog'
         }
     },
     dropTerminal() {
@@ -163,6 +164,7 @@ let Terminal = React.createClass({
                     terminalInputColor        = {this.state.terminalInputColor}
                     terminalInputText         = {this.state.terminalInputText}
                     terminalPreviousCommands  = {this.state.terminalPreviousCommands}
+                    terminalUserName          = {this.state.terminalUserName}
                 />
 
                 <div style={ styles.MenuBar }>

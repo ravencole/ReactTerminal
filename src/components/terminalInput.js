@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import TerminalTemplate from '~/src/models/terminalTemplate';
 
 let TerminalInput = React.createClass({
     render() {
@@ -12,9 +13,10 @@ let TerminalInput = React.createClass({
             },
             terminalInput: {
                 flexGrow: '1',
-                height: '12px',
                 backgroundColor: 'transparent',
                 outline: '0',
+                fontSize: '16px',
+                fontFamily: 'serif',
                 border: '0px solid transparent',
                 color: this.props.terminalInputColor
             },
@@ -34,10 +36,11 @@ let TerminalInput = React.createClass({
             }
         };
         let displayTerminalPreviousCommands = this.props.terminalPreviousCommands.map(function(command) {
-            return (
-                <div>{command.command}</div>
-            );
-        });
+            if (command.commandAdd) {
+                return <div>Terminal:home {this.props.terminalUserName}$ {command.commandAdd}</div>;
+            }
+            return new TerminalTemplate(command);
+        }.bind(this));
         return (
             <div style={[ styles.terminalTextBox ]}>
                 {displayTerminalPreviousCommands}
@@ -46,7 +49,7 @@ let TerminalInput = React.createClass({
                     style={[ styles.terminalForm ]}
                 >
                     <div style={[ styles.terminalInputName ]}>   
-                        Terminal:home guest$
+                        Terminal:home {this.props.terminalUserName}$
                     </div>
                     <input 
                         onChange={this.props.onTerminalInputTextChange}

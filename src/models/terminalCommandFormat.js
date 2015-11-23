@@ -1,10 +1,13 @@
-class TerminalCommand {
+class TerminalCommandFormat {
+    /**
+     *  
+     */
     constructor(_command) {
         this.rawCommand = _command;
-        this.command    = {command: null, option: null, modifier: null, error: null};
+        this.command    = {command: null, option: null, modifier: null};
 
         this.validateType();
-        this.splitCommand();
+        this.splitOrigionalCommand();
         this.formatCommand();
         this.formatModifiersAndOptions();
         return this.command;
@@ -33,7 +36,7 @@ class TerminalCommand {
         } 
         return false;
     }
-    splitCommand() {
+    splitOrigionalCommand() {
         this.rawCommand = this.rawCommand.split(" ");
     }
     validateType() {
@@ -43,4 +46,4 @@ class TerminalCommand {
     }
 }
 
-export default TerminalCommand;
+export default TerminalCommandFormat;
